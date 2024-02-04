@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mp3 Audio Player</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="music-player">
+        <nav>
+          <div class="icon">
+            <i class="fa-solid fa-circle-arrow-left"></i>
+          </div>
+          <div class="icon">
+            <i class="fa-solid fa-circle-info"></i>
+          </div>
+        </nav>
+        <img
+          src="./hanuman-laxman-lord-shri-ram-sita-mata.jpg"
+          alt="Jai Shri Ram"
+          class="song-banner"
+        />
+        <h1>Keejo Kesari Ke Laal🎵</h1>
+        <p>Lakhbir Singh Lakha 🎙️</p>
+        <audio id="shri-ram-song">
+          <source src="./Jai Shree Ram.mp3" type="audio/mpeg" />
+        </audio>
+
+        <input type="range" id="song-duration-bar" value="0" />
+        <div class="control-buttons">
+          <div onclick="songMute()"><span id="mute-btn">🔊</span></i></div>
+          <div onclick="playToggle()">
+            <i class="fa-solid fa-play" id="play-btn"></i>
+          </div>
+          <div><span>⏭️</span></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let songBar = document.getElementById("song-duration-bar");
+      let song = document.getElementById("shri-ram-song");
+      let playBtn = document.getElementById("play-btn");
+      let muteBtn = document.getElementById("mute-btn");
+      let loopBtn = document.getElementById("loop-btn");
+
+      song.onloadedmetadata = function () {
+        songBar.max = song.duration;
+        songBar.value = song.currentTime;
+      };
+
+      function playToggle() {
+        if (playBtn.classList.contains("fa-pause")) {
+          song.pause();
+          playBtn.classList.remove("fa-pause");
+          playBtn.classList.add("fa-play");
+        } else {
+          song.play();
+          playBtn.classList.add("fa-pause");
+          playBtn.classList.remove("fa-play");
+        }
+      };
+
+      if(song.play()){
+        setInterval(() => {
+         songBar.value = song.currentTime;
+        }, 500);
+      };
+
+      songBar.onchange = function () {
+        song.play();
+        song.currentTime = songBar.value;
+        playBtn.classList.add("fa-pause");
+        playBtn.classList.remove("fa-play");
+      };
+
+      function songMute(){
+        if(song.muted){
+          song.muted = false;
+          muteBtn.innerText = "🔊";
+        }else{
+          song.muted = true;
+          muteBtn.innerText = "🔇";
+        }
+      };
+    </script>
+  </body>
+</html>
